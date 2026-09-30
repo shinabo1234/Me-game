@@ -3,331 +3,334 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shoboklo's Sonic CD</title>
+
+<title>Sonic CD Plus Plus JP</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+    * {
+        box-sizing: border-box;
+    }
 
-html, body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-}
+    html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #111;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 
-/* GAME */
+    /* GAME */
+    #game {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #111;
+        z-index: 1;
+    }
 
-#game {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-}
+    /* COMMAND BAR */
+    #commandBar {
+        position: fixed;
+        top: 15px;
+        left: 15px;
 
-#game iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
+        width: 360px;
+        height: 46px;
 
+        display: flex;
+        align-items: center;
+        gap: 7px;
 
-/* COMMAND BAR */
+        padding: 6px 8px;
 
-#commandBar {
-    position: fixed;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
+        background: rgba(15, 15, 15, 0.94);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 10px;
 
-    width: min(500px, 90vw);
+        box-shadow: 0 5px 25px rgba(0,0,0,0.45);
 
-    display: flex;
-    gap: 5px;
+        z-index: 1000;
 
-    padding: 6px;
+        user-select: none;
+    }
 
-    background: rgba(15, 15, 15, 0.94);
-    border: 1px solid #444;
-    border-radius: 10px;
+    /* DRAG HANDLE */
+    #dragHandle {
+        width: 22px;
+        height: 32px;
 
-    z-index: 9999;
-}
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-#commandInput {
-    flex: 1;
+        color: #888;
 
-    background: transparent;
-    border: none;
-    outline: none;
+        cursor: grab;
 
-    color: white;
+        font-size: 16px;
+        letter-spacing: -3px;
+    }
 
-    padding: 9px;
-    font-size: 14px;
-}
+    #dragHandle:active {
+        cursor: grabbing;
+    }
 
-#commandInput::placeholder {
-    color: #777;
-}
+    #commandInput {
+        flex: 1;
+        min-width: 0;
 
-#commandButton {
-    background: #292929;
-    color: white;
+        height: 32px;
 
-    border: none;
-    border-radius: 7px;
+        padding: 0 10px;
 
-    padding: 8px 13px;
+        border: 0;
+        outline: none;
+        border-radius: 6px;
 
-    cursor: pointer;
-}
+        background: #252525;
+        color: white;
 
-#commandButton:hover {
-    background: #444;
-}
+        font-size: 14px;
 
+        user-select: text;
+    }
 
-/* REOPEN BUTTON */
+    #commandInput::placeholder {
+        color: #888;
+    }
 
-#reopenButton {
-    position: fixed;
+    #commandButton {
+        height: 32px;
 
-    top: 15px;
-    right: 15px;
+        padding: 0 13px;
 
-    background: rgba(20, 20, 20, 0.95);
-    color: white;
+        border: 0;
+        border-radius: 6px;
 
-    border: 1px solid #555;
-    border-radius: 9px;
+        background: #3b3b3b;
+        color: white;
 
-    padding: 10px 14px;
+        cursor: pointer;
+    }
 
-    cursor: pointer;
+    #commandButton:hover {
+        background: #505050;
+    }
 
-    z-index: 9998;
+    /* SHOBOKLO MENU */
+    #menu {
+        position: fixed;
 
-    display: none;
-}
+        top: 70px;
+        right: 20px;
 
-#reopenButton:hover {
-    background: #333;
-}
+        width: 290px;
+        max-height: calc(100vh - 100px);
 
+        overflow-y: auto;
 
-/* CHEAT MENU */
+        background: rgba(18,18,18,0.97);
+        color: white;
 
-#cheatMenu {
-    position: fixed;
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 12px;
 
-    top: 70px;
-    right: 20px;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.6);
 
-    width: 310px;
-    max-width: 90vw;
+        z-index: 2000;
 
-    background: rgba(20, 20, 20, 0.97);
+        display: none;
+    }
 
-    border: 1px solid #555;
-    border-radius: 12px;
+    #menuHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.75);
+        padding: 12px 14px;
 
-    z-index: 10000;
+        background: #242424;
 
-    display: none;
-}
+        border-radius: 12px 12px 0 0;
 
+        cursor: move;
 
-/* MENU HEADER */
+        user-select: none;
+    }
 
-#cheatHeader {
-    display: flex;
+    #menuTitle {
+        font-weight: bold;
+        font-size: 15px;
+    }
 
-    align-items: center;
-    justify-content: space-between;
+    #closeMenu {
+        width: 28px;
+        height: 28px;
 
-    padding: 13px;
+        border: 0;
+        border-radius: 6px;
 
-    background: #292929;
+        background: #3a3a3a;
+        color: white;
 
-    border-radius: 12px 12px 0 0;
+        cursor: pointer;
 
-    cursor: move;
-    user-select: none;
-}
+        font-size: 18px;
+    }
 
-#cheatHeader strong {
-    color: white;
-    font-size: 15px;
-}
+    #closeMenu:hover {
+        background: #555;
+    }
 
-#closeMenu {
-    background: transparent;
-    border: none;
+    #menuContent {
+        padding: 10px;
+    }
 
-    color: #aaa;
+    .cheat {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-    font-size: 22px;
+        gap: 10px;
 
-    cursor: pointer;
-}
+        padding: 9px 8px;
 
-#closeMenu:hover {
-    color: white;
-}
+        border-bottom: 1px solid rgba(255,255,255,0.07);
 
+        font-size: 13px;
+    }
 
-/* CHEATS */
+    .cheat:last-child {
+        border-bottom: 0;
+    }
 
-#cheats {
-    padding: 12px;
+    .switch {
+        position: relative;
+        width: 40px;
+        height: 22px;
+        flex-shrink: 0;
+    }
 
-    max-height: 65vh;
-    overflow-y: auto;
-}
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
 
-.cheat {
-    display: flex;
+    .slider {
+        position: absolute;
+        inset: 0;
 
-    align-items: center;
-    justify-content: space-between;
+        background: #444;
 
-    padding: 10px;
-    margin-bottom: 7px;
+        border-radius: 20px;
 
-    background: #181818;
-    border-radius: 8px;
-}
+        cursor: pointer;
 
-.cheat span {
-    color: white;
-    font-size: 13px;
-}
+        transition: 0.2s;
+    }
 
+    .slider:before {
+        content: "";
 
-/* SWITCHES */
+        position: absolute;
 
-.switch {
-    position: relative;
+        width: 16px;
+        height: 16px;
 
-    width: 40px;
-    height: 22px;
-}
+        left: 3px;
+        top: 3px;
 
-.switch input {
-    opacity: 0;
+        background: white;
 
-    width: 0;
-    height: 0;
-}
+        border-radius: 50%;
 
-.slider {
-    position: absolute;
+        transition: 0.2s;
+    }
 
-    inset: 0;
+    .switch input:checked + .slider {
+        background: #28a745;
+    }
 
-    background: #444;
+    .switch input:checked + .slider:before {
+        transform: translateX(18px);
+    }
 
-    border-radius: 20px;
+    /* REOPEN BUTTON */
+    #reopenButton {
+        position: fixed;
 
-    cursor: pointer;
+        right: 18px;
+        bottom: 18px;
 
-    transition: 0.2s;
-}
+        padding: 9px 13px;
 
-.slider:before {
-    content: "";
+        border: 0;
+        border-radius: 8px;
 
-    position: absolute;
+        background: rgba(20,20,20,0.95);
+        color: white;
 
-    width: 16px;
-    height: 16px;
+        cursor: pointer;
 
-    left: 3px;
-    top: 3px;
+        z-index: 1500;
 
-    background: white;
+        display: none;
 
-    border-radius: 50%;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
 
-    transition: 0.2s;
-}
+    #reopenButton:hover {
+        background: #333;
+    }
 
-.switch input:checked + .slider {
-    background: #1f8cff;
-}
+    @media (max-width: 600px) {
+        #commandBar {
+            width: calc(100% - 30px);
+        }
 
-.switch input:checked + .slider:before {
-    transform: translateX(18px);
-}
-
-
-/* MESSAGE */
-
-#message {
-    position: fixed;
-
-    top: 20px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    background: rgba(20, 20, 20, 0.95);
-    color: white;
-
-    padding: 10px 18px;
-
-    border-radius: 8px;
-
-    display: none;
-
-    z-index: 11000;
-
-    font-size: 14px;
-}
+        #menu {
+            top: 70px;
+            right: 10px;
+            width: calc(100% - 20px);
+        }
+    }
 </style>
 </head>
 
 <body>
 
-
-<!-- =========================
-     SONIC CD GAME
-========================= -->
-
-<div id="game">
-
-    <iframe
-        src="https://www.retrogames.cc/embed/44042-sonic-cd-plus-plus-jp.html"
-        width="100%"
-        height="100%"
-        frameborder="0"
-        allowfullscreen="true"
-        webkitallowfullscreen="true"
-        mozallowfullscreen="true"
-        scrolling="no"
-        allow="cross-origin-isolated">
-    </iframe>
-
-</div>
+<!-- RETROGAMES -->
+<iframe
+    id="game"
+    src="https://www.retrogames.cc/embed/44042-sonic-cd-plus-plus-jp.html"
+    width="100%"
+    height="100%"
+    frameborder="0"
+    allowfullscreen="true"
+    webkitallowfullscreen="true"
+    mozallowfullscreen="true"
+    scrolling="no"
+    allow="cross-origin-isolated">
+</iframe>
 
 
-<!-- =========================
-     COMMAND BAR
-========================= -->
-
+<!-- COMMAND BAR -->
 <div id="commandBar">
+
+    <div id="dragHandle" title="Drag command bar">
+        ⋮⋮
+    </div>
 
     <input
         id="commandInput"
         type="text"
-        placeholder="Type a command..."
         autocomplete="off"
+        spellcheck="false"
+        placeholder="Enter command..."
     >
 
     <button id="commandButton">
@@ -337,494 +340,382 @@ html, body {
 </div>
 
 
-<!-- =========================
-     REOPEN BUTTON
-========================= -->
+<!-- SHOBOKLO MENU -->
+<div id="menu">
 
+    <div id="menuHeader">
+        <span id="menuTitle">Shoboklo's Menu</span>
+        <button id="closeMenu">×</button>
+    </div>
+
+    <div id="menuContent">
+
+        <div class="cheat">
+            <span>Debug Mode</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Invincibility</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Super Sonic</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Infinite Rings</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Infinite Lives</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Infinite Time</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Speed Boost</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Moon Jump</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Super Jump</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Freeze Timer</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>No Enemy Damage</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Fast Spin Dash</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Low Gravity</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Slow Motion</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>High Speed Mode</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Extra Rings</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Auto Spin</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="cheat">
+            <span>Chaos Mode</span>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- REOPEN BUTTON -->
 <button id="reopenButton">
     Shoboklo's Menu
 </button>
 
 
-<!-- =========================
-     MESSAGE
-========================= -->
-
-<div id="message"></div>
-
-
-<!-- =========================
-     CHEAT MENU
-========================= -->
-
-<div id="cheatMenu">
-
-    <div id="cheatHeader">
-
-        <strong>⚡ Shoboklo's Menu</strong>
-
-        <button id="closeMenu">×</button>
-
-    </div>
-
-
-    <div id="cheats">
-
-
-        <div class="cheat">
-            <span>Debug Mode</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Invincibility</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Super Sonic</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Infinite Rings</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Infinite Lives</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Infinite Time</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Speed Boost</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Moon Jump</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Super Jump</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Freeze Timer</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>No Enemy Damage</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Fast Spin Dash</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Low Gravity</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Slow Motion</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>High Speed Mode</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Extra Rings</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Auto Spin</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-        <div class="cheat">
-            <span>Chaos Mode</span>
-
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-
-    </div>
-
-</div>
-
-
 <script>
 
-/* ELEMENTS */
+/* =========================
+   COMMAND SYSTEM
+========================= */
 
-const input =
-    document.getElementById("commandInput");
+const commandInput = document.getElementById("commandInput");
+const commandButton = document.getElementById("commandButton");
 
-const commandButton =
-    document.getElementById("commandButton");
+const menu = document.getElementById("menu");
+const closeMenu = document.getElementById("closeMenu");
+const reopenButton = document.getElementById("reopenButton");
 
-const menu =
-    document.getElementById("cheatMenu");
+let menuUnlocked = false;
 
-const closeButton =
-    document.getElementById("closeMenu");
-
-const reopenButton =
-    document.getElementById("reopenButton");
-
-const message =
-    document.getElementById("message");
-
-
-/* MESSAGE */
-
-function showMessage(text) {
-
-    message.textContent = text;
-
-    message.style.display = "block";
-
-    setTimeout(() => {
-
-        message.style.display = "none";
-
-    }, 1800);
-}
-
-
-/* OPEN MENU */
-
-function openMenu() {
-
-    menu.style.display = "block";
-
-    reopenButton.style.display = "block";
-}
-
-
-/* CLOSE MENU */
-
-function closeMenu() {
-
-    menu.style.display = "none";
-
-    reopenButton.style.display = "block";
-}
-
-
-/* COMMAND SYSTEM */
 
 function runCommand() {
 
-    const command =
-        input.value.trim().toLowerCase();
+    const command = commandInput.value.trim().toLowerCase();
 
     if (!command) return;
 
-
     if (command === "/shoboklo") {
 
-        openMenu();
+        menuUnlocked = true;
 
-        showMessage(
-            "Shoboklo's Menu opened!"
-        );
+        menu.style.display = "block";
+        reopenButton.style.display = "none";
 
-    }
-
-    else if (command === "/help") {
-
-        showMessage(
-            "/Shoboklo = open Shoboklo's Menu"
-        );
-
-    }
-
-    else if (command === "/clear") {
-
-        input.value = "";
+        commandInput.value = "";
 
         return;
-
     }
 
-    else {
+    if (command === "/help") {
 
-        showMessage(
-            "Unknown command."
-        );
+        commandInput.value = "/Shoboklo";
 
+        return;
     }
 
-    input.value = "";
+    if (command === "/clear") {
+
+        commandInput.value = "";
+
+        return;
+    }
+
+    commandInput.value = "";
 }
 
 
-/* RUN BUTTON */
+commandButton.addEventListener("click", runCommand);
 
-commandButton.addEventListener(
-    "click",
-    runCommand
-);
+commandInput.addEventListener("keydown", function(event) {
 
-
-/* ENTER KEY */
-
-input.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (event.key === "Enter") {
-
-            runCommand();
-
-        }
-
+    if (event.key === "Enter") {
+        runCommand();
     }
-);
-
-
-/* CLOSE BUTTON */
-
-closeButton.addEventListener(
-    "click",
-    closeMenu
-);
-
-
-/* REOPEN BUTTON */
-
-reopenButton.addEventListener(
-    "click",
-    openMenu
-);
-
-
-/* CHEAT SWITCHES */
-
-document
-.querySelectorAll(".cheat input")
-.forEach(toggle => {
-
-    toggle.addEventListener(
-        "change",
-        function() {
-
-            const name =
-                this.closest(".cheat")
-                .querySelector("span")
-                .textContent;
-
-            if (this.checked) {
-
-                showMessage(
-                    name + " enabled"
-                );
-
-            } else {
-
-                showMessage(
-                    name + " disabled"
-                );
-
-            }
-
-        }
-    );
 
 });
 
 
-/* DRAG MENU */
+/* =========================
+   MENU CLOSE / REOPEN
+========================= */
 
-const header =
-    document.getElementById("cheatHeader");
+closeMenu.addEventListener("click", function() {
 
-let dragging = false;
-let offsetX = 0;
-let offsetY = 0;
+    menu.style.display = "none";
+
+    if (menuUnlocked) {
+        reopenButton.style.display = "block";
+    }
+
+});
 
 
-header.addEventListener(
-    "pointerdown",
-    function(event) {
+reopenButton.addEventListener("click", function() {
 
-        dragging = true;
+    menu.style.display = "block";
+    reopenButton.style.display = "none";
 
-        const rect =
-            menu.getBoundingClientRect();
+});
 
-        offsetX =
-            event.clientX - rect.left;
 
-        offsetY =
-            event.clientY - rect.top;
+/* =========================
+   DRAG COMMAND BAR
+========================= */
 
-        header.setPointerCapture(
-            event.pointerId
+const commandBar = document.getElementById("commandBar");
+const dragHandle = document.getElementById("dragHandle");
+
+let draggingCommand = false;
+let commandOffsetX = 0;
+let commandOffsetY = 0;
+
+
+dragHandle.addEventListener("pointerdown", function(event) {
+
+    draggingCommand = true;
+
+    const rect = commandBar.getBoundingClientRect();
+
+    commandOffsetX = event.clientX - rect.left;
+    commandOffsetY = event.clientY - rect.top;
+
+    dragHandle.setPointerCapture(event.pointerId);
+
+});
+
+
+dragHandle.addEventListener("pointermove", function(event) {
+
+    if (!draggingCommand) return;
+
+    let x = event.clientX - commandOffsetX;
+    let y = event.clientY - commandOffsetY;
+
+    const maxX = window.innerWidth - commandBar.offsetWidth;
+    const maxY = window.innerHeight - commandBar.offsetHeight;
+
+    x = Math.max(0, Math.min(x, maxX));
+    y = Math.max(0, Math.min(y, maxY));
+
+    commandBar.style.left = x + "px";
+    commandBar.style.top = y + "px";
+
+});
+
+
+dragHandle.addEventListener("pointerup", function() {
+
+    draggingCommand = false;
+
+});
+
+
+/* =========================
+   DRAG SHOBOKLO MENU
+========================= */
+
+const menuHeader = document.getElementById("menuHeader");
+
+let draggingMenu = false;
+let menuOffsetX = 0;
+let menuOffsetY = 0;
+
+
+menuHeader.addEventListener("pointerdown", function(event) {
+
+    if (event.target === closeMenu) return;
+
+    draggingMenu = true;
+
+    const rect = menu.getBoundingClientRect();
+
+    menuOffsetX = event.clientX - rect.left;
+    menuOffsetY = event.clientY - rect.top;
+
+    menuHeader.setPointerCapture(event.pointerId);
+
+});
+
+
+menuHeader.addEventListener("pointermove", function(event) {
+
+    if (!draggingMenu) return;
+
+    let x = event.clientX - menuOffsetX;
+    let y = event.clientY - menuOffsetY;
+
+    const maxX = window.innerWidth - menu.offsetWidth;
+    const maxY = window.innerHeight - menu.offsetHeight;
+
+    x = Math.max(0, Math.min(x, maxX));
+    y = Math.max(0, Math.min(y, maxY));
+
+    menu.style.left = x + "px";
+    menu.style.top = y + "px";
+    menu.style.right = "auto";
+
+});
+
+
+menuHeader.addEventListener("pointerup", function() {
+
+    draggingMenu = false;
+
+});
+
+
+/* =========================
+   CHEAT SWITCHES
+========================= */
+
+document.querySelectorAll(".cheat input").forEach(function(toggle) {
+
+    toggle.addEventListener("change", function() {
+
+        const name =
+            this.closest(".cheat")
+            .querySelector("span")
+            .textContent;
+
+        console.log(
+            name + ": " + (this.checked ? "ON" : "OFF")
         );
 
-    }
-);
+    });
 
-
-header.addEventListener(
-    "pointermove",
-    function(event) {
-
-        if (!dragging) return;
-
-        let x =
-            event.clientX - offsetX;
-
-        let y =
-            event.clientY - offsetY;
-
-
-        const maxX =
-            window.innerWidth -
-            menu.offsetWidth;
-
-        const maxY =
-            window.innerHeight -
-            menu.offsetHeight;
-
-
-        x = Math.max(
-            0,
-            Math.min(x, maxX)
-        );
-
-        y = Math.max(
-            0,
-            Math.min(y, maxY)
-        );
-
-
-        menu.style.left =
-            x + "px";
-
-        menu.style.top =
-            y + "px";
-
-        menu.style.right =
-            "auto";
-
-    }
-);
-
-
-header.addEventListener(
-    "pointerup",
-    function() {
-
-        dragging = false;
-
-    }
-);
+});
 
 </script>
 
