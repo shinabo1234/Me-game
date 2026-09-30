@@ -10,12 +10,13 @@
     box-sizing: border-box;
 }
 
-body {
+html, body {
     margin: 0;
+    width: 100%;
+    height: 100%;
     background: #000;
-    color: white;
-    font-family: Arial, sans-serif;
     overflow: hidden;
+    font-family: Arial, sans-serif;
 }
 
 /* GAME */
@@ -23,12 +24,14 @@ body {
 #game {
     position: fixed;
     inset: 0;
+    width: 100%;
+    height: 100%;
 }
 
 #game iframe {
     width: 100%;
     height: 100%;
-    border: none;
+    border: 0;
 }
 
 
@@ -79,6 +82,7 @@ body {
     border-radius: 7px;
 
     padding: 8px 13px;
+
     cursor: pointer;
 }
 
@@ -87,9 +91,7 @@ body {
 }
 
 
-/* REOPEN BUTTON
-   Hidden until /Shoboklo is entered
-*/
+/* REOPEN BUTTON */
 
 #reopenButton {
     position: fixed;
@@ -160,6 +162,7 @@ body {
 }
 
 #cheatHeader strong {
+    color: white;
     font-size: 15px;
 }
 
@@ -202,6 +205,7 @@ body {
 }
 
 .cheat span {
+    color: white;
     font-size: 13px;
 }
 
@@ -274,6 +278,7 @@ body {
     transform: translateX(-50%);
 
     background: rgba(20, 20, 20, 0.95);
+    color: white;
 
     padding: 10px 18px;
 
@@ -290,19 +295,31 @@ body {
 
 <body>
 
-<!-- GAME -->
+
+<!-- =========================
+     SONIC CD GAME
+========================= -->
 
 <div id="game">
 
     <iframe
         src="https://www.retrogames.cc/embed/44042-sonic-cd-plus-plus-jp.html"
-        allowfullscreen>
+        width="100%"
+        height="100%"
+        frameborder="0"
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true"
+        scrolling="no"
+        allow="cross-origin-isolated">
     </iframe>
 
 </div>
 
 
-<!-- COMMAND BAR -->
+<!-- =========================
+     COMMAND BAR
+========================= -->
 
 <div id="commandBar">
 
@@ -320,19 +337,25 @@ body {
 </div>
 
 
-<!-- REOPEN BUTTON -->
+<!-- =========================
+     REOPEN BUTTON
+========================= -->
 
 <button id="reopenButton">
     Shoboklo's Menu
 </button>
 
 
-<!-- MESSAGE -->
+<!-- =========================
+     MESSAGE
+========================= -->
 
 <div id="message"></div>
 
 
-<!-- CHEAT MENU -->
+<!-- =========================
+     CHEAT MENU
+========================= -->
 
 <div id="cheatMenu">
 
@@ -344,153 +367,192 @@ body {
 
     </div>
 
+
     <div id="cheats">
+
 
         <div class="cheat">
             <span>Debug Mode</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Invincibility</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Super Sonic</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Infinite Rings</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Infinite Lives</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Infinite Time</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Speed Boost</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Moon Jump</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Super Jump</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Freeze Timer</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>No Enemy Damage</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Fast Spin Dash</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Low Gravity</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Slow Motion</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>High Speed Mode</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Extra Rings</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Auto Spin</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Chaos Mode</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
 
+
     </div>
+
 </div>
 
 
@@ -498,14 +560,23 @@ body {
 
 /* ELEMENTS */
 
-const input = document.getElementById("commandInput");
-const commandButton = document.getElementById("commandButton");
+const input =
+    document.getElementById("commandInput");
 
-const menu = document.getElementById("cheatMenu");
-const closeButton = document.getElementById("closeMenu");
-const reopenButton = document.getElementById("reopenButton");
+const commandButton =
+    document.getElementById("commandButton");
 
-const message = document.getElementById("message");
+const menu =
+    document.getElementById("cheatMenu");
+
+const closeButton =
+    document.getElementById("closeMenu");
+
+const reopenButton =
+    document.getElementById("reopenButton");
+
+const message =
+    document.getElementById("message");
 
 
 /* MESSAGE */
@@ -513,10 +584,13 @@ const message = document.getElementById("message");
 function showMessage(text) {
 
     message.textContent = text;
+
     message.style.display = "block";
 
     setTimeout(() => {
+
         message.style.display = "none";
+
     }, 1800);
 }
 
@@ -527,7 +601,6 @@ function openMenu() {
 
     menu.style.display = "block";
 
-    /* Only becomes visible after /Shoboklo */
     reopenButton.style.display = "block";
 }
 
@@ -538,7 +611,6 @@ function closeMenu() {
 
     menu.style.display = "none";
 
-    /* Keep the reopen button available */
     reopenButton.style.display = "block";
 }
 
@@ -599,21 +671,23 @@ commandButton.addEventListener(
 );
 
 
-/* ENTER */
+/* ENTER KEY */
 
 input.addEventListener(
     "keydown",
     function(event) {
 
         if (event.key === "Enter") {
+
             runCommand();
+
         }
 
     }
 );
 
 
-/* CLOSE */
+/* CLOSE BUTTON */
 
 closeButton.addEventListener(
     "click",
@@ -621,7 +695,7 @@ closeButton.addEventListener(
 );
 
 
-/* REOPEN */
+/* REOPEN BUTTON */
 
 reopenButton.addEventListener(
     "click",
@@ -692,6 +766,7 @@ header.addEventListener(
         header.setPointerCapture(
             event.pointerId
         );
+
     }
 );
 
@@ -729,9 +804,15 @@ header.addEventListener(
         );
 
 
-        menu.style.left = x + "px";
-        menu.style.top = y + "px";
-        menu.style.right = "auto";
+        menu.style.left =
+            x + "px";
+
+        menu.style.top =
+            y + "px";
+
+        menu.style.right =
+            "auto";
+
     }
 );
 
@@ -739,7 +820,9 @@ header.addEventListener(
 header.addEventListener(
     "pointerup",
     function() {
+
         dragging = false;
+
     }
 );
 
