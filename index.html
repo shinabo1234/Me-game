@@ -7,303 +7,358 @@
 <title>Sonic CD Plus Plus JP</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    html, body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #111;
-        font-family: Arial, Helvetica, sans-serif;
-    }
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #111;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-    /* GAME */
-    #game {
-        position: fixed;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
-        background: #111;
-        z-index: 1;
-    }
+/* =========================
+   GAME
+========================= */
 
-    /* COMMAND BAR */
+#game {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+
+    background: #111;
+
+    z-index: 1;
+}
+
+
+/* =========================
+   SLIDE-OUT COMMAND PANEL
+========================= */
+
+#commandPanel {
+    position: fixed;
+
+    right: 15px;
+    bottom: 15px;
+
+    display: flex;
+    align-items: center;
+
+    z-index: 3000;
+
+    transition: transform 0.3s ease;
+}
+
+#commandPanel.hidden {
+    transform: translateX(calc(100% - 42px));
+}
+
+#commandToggle {
+    width: 38px;
+    height: 42px;
+
+    border: 0;
+
+    border-radius: 8px 0 0 8px;
+
+    background: rgba(15, 15, 15, 0.96);
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    box-shadow: -3px 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+#commandToggle:hover {
+    background: #333;
+}
+
+#commandBar {
+    width: 360px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 6px 8px;
+
+    background: rgba(15, 15, 15, 0.96);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: 0;
+
+    border-radius: 0 10px 10px 0;
+
+    box-shadow: 5px 4px 20px rgba(0, 0, 0, 0.45);
+}
+
+#commandInput {
+    flex: 1;
+
+    min-width: 0;
+
+    height: 32px;
+
+    padding: 0 10px;
+
+    border: 0;
+    outline: none;
+
+    border-radius: 6px;
+
+    background: #252525;
+    color: white;
+
+    font-size: 14px;
+}
+
+#commandInput::placeholder {
+    color: #888;
+}
+
+#commandButton {
+    height: 32px;
+
+    padding: 0 13px;
+
+    border: 0;
+
+    border-radius: 6px;
+
+    background: #3b3b3b;
+    color: white;
+
+    cursor: pointer;
+}
+
+#commandButton:hover {
+    background: #505050;
+}
+
+
+/* =========================
+   SHOBOKLO MENU
+========================= */
+
+#menu {
+    position: fixed;
+
+    top: 70px;
+    right: 20px;
+
+    width: 290px;
+    max-height: calc(100vh - 100px);
+
+    overflow-y: auto;
+
+    display: none;
+
+    background: rgba(18, 18, 18, 0.97);
+    color: white;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+
+    z-index: 4000;
+}
+
+#menuHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 14px;
+
+    background: #242424;
+
+    border-radius: 12px 12px 0 0;
+
+    cursor: move;
+
+    user-select: none;
+}
+
+#menuTitle {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#closeMenu {
+    width: 28px;
+    height: 28px;
+
+    border: 0;
+    border-radius: 6px;
+
+    background: #3a3a3a;
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+#closeMenu:hover {
+    background: #555;
+}
+
+#menuContent {
+    padding: 10px;
+}
+
+.cheat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 9px 8px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+
+    font-size: 13px;
+}
+
+.cheat:last-child {
+    border-bottom: 0;
+}
+
+
+/* =========================
+   TOGGLE SWITCHES
+========================= */
+
+.switch {
+    position: relative;
+
+    width: 40px;
+    height: 22px;
+
+    flex-shrink: 0;
+}
+
+.switch input {
+    opacity: 0;
+
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+
+    inset: 0;
+
+    background: #444;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.slider:before {
+    content: "";
+
+    position: absolute;
+
+    width: 16px;
+    height: 16px;
+
+    left: 3px;
+    top: 3px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    transition: 0.2s;
+}
+
+.switch input:checked + .slider {
+    background: #28a745;
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(18px);
+}
+
+
+/* =========================
+   REOPEN BUTTON
+========================= */
+
+#reopenButton {
+    position: fixed;
+
+    right: 18px;
+    bottom: 18px;
+
+    padding: 9px 13px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: rgba(20, 20, 20, 0.95);
+    color: white;
+
+    cursor: pointer;
+
+    z-index: 3500;
+
+    display: none;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+#reopenButton:hover {
+    background: #333;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
     #commandBar {
-        position: fixed;
-        top: 15px;
-        left: 15px;
-
-        width: 360px;
-        height: 46px;
-
-        display: flex;
-        align-items: center;
-        gap: 7px;
-
-        padding: 6px 8px;
-
-        background: rgba(15, 15, 15, 0.94);
-        border: 1px solid rgba(255,255,255,0.15);
-        border-radius: 10px;
-
-        box-shadow: 0 5px 25px rgba(0,0,0,0.45);
-
-        z-index: 1000;
-
-        user-select: none;
+        width: calc(100vw - 55px);
     }
 
-    /* DRAG HANDLE */
-    #dragHandle {
-        width: 22px;
-        height: 32px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        color: #888;
-
-        cursor: grab;
-
-        font-size: 16px;
-        letter-spacing: -3px;
-    }
-
-    #dragHandle:active {
-        cursor: grabbing;
-    }
-
-    #commandInput {
-        flex: 1;
-        min-width: 0;
-
-        height: 32px;
-
-        padding: 0 10px;
-
-        border: 0;
-        outline: none;
-        border-radius: 6px;
-
-        background: #252525;
-        color: white;
-
-        font-size: 14px;
-
-        user-select: text;
-    }
-
-    #commandInput::placeholder {
-        color: #888;
-    }
-
-    #commandButton {
-        height: 32px;
-
-        padding: 0 13px;
-
-        border: 0;
-        border-radius: 6px;
-
-        background: #3b3b3b;
-        color: white;
-
-        cursor: pointer;
-    }
-
-    #commandButton:hover {
-        background: #505050;
-    }
-
-    /* SHOBOKLO MENU */
     #menu {
-        position: fixed;
+        top: 60px;
+        right: 10px;
 
-        top: 70px;
-        right: 20px;
-
-        width: 290px;
-        max-height: calc(100vh - 100px);
-
-        overflow-y: auto;
-
-        background: rgba(18,18,18,0.97);
-        color: white;
-
-        border: 1px solid rgba(255,255,255,0.15);
-        border-radius: 12px;
-
-        box-shadow: 0 10px 35px rgba(0,0,0,0.6);
-
-        z-index: 2000;
-
-        display: none;
+        width: calc(100vw - 20px);
     }
-
-    #menuHeader {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        padding: 12px 14px;
-
-        background: #242424;
-
-        border-radius: 12px 12px 0 0;
-
-        cursor: move;
-
-        user-select: none;
-    }
-
-    #menuTitle {
-        font-weight: bold;
-        font-size: 15px;
-    }
-
-    #closeMenu {
-        width: 28px;
-        height: 28px;
-
-        border: 0;
-        border-radius: 6px;
-
-        background: #3a3a3a;
-        color: white;
-
-        cursor: pointer;
-
-        font-size: 18px;
-    }
-
-    #closeMenu:hover {
-        background: #555;
-    }
-
-    #menuContent {
-        padding: 10px;
-    }
-
-    .cheat {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        gap: 10px;
-
-        padding: 9px 8px;
-
-        border-bottom: 1px solid rgba(255,255,255,0.07);
-
-        font-size: 13px;
-    }
-
-    .cheat:last-child {
-        border-bottom: 0;
-    }
-
-    .switch {
-        position: relative;
-        width: 40px;
-        height: 22px;
-        flex-shrink: 0;
-    }
-
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-    .slider {
-        position: absolute;
-        inset: 0;
-
-        background: #444;
-
-        border-radius: 20px;
-
-        cursor: pointer;
-
-        transition: 0.2s;
-    }
-
-    .slider:before {
-        content: "";
-
-        position: absolute;
-
-        width: 16px;
-        height: 16px;
-
-        left: 3px;
-        top: 3px;
-
-        background: white;
-
-        border-radius: 50%;
-
-        transition: 0.2s;
-    }
-
-    .switch input:checked + .slider {
-        background: #28a745;
-    }
-
-    .switch input:checked + .slider:before {
-        transform: translateX(18px);
-    }
-
-    /* REOPEN BUTTON */
-    #reopenButton {
-        position: fixed;
-
-        right: 18px;
-        bottom: 18px;
-
-        padding: 9px 13px;
-
-        border: 0;
-        border-radius: 8px;
-
-        background: rgba(20,20,20,0.95);
-        color: white;
-
-        cursor: pointer;
-
-        z-index: 1500;
-
-        display: none;
-
-        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    }
-
-    #reopenButton:hover {
-        background: #333;
-    }
-
-    @media (max-width: 600px) {
-        #commandBar {
-            width: calc(100% - 30px);
-        }
-
-        #menu {
-            top: 70px;
-            right: 10px;
-            width: calc(100% - 20px);
-        }
-    }
+}
 </style>
 </head>
 
+
 <body>
 
-<!-- RETROGAMES -->
+<!-- =========================
+     RETROGAMES
+========================= -->
+
 <iframe
     id="game"
     src="https://www.retrogames.cc/embed/44042-sonic-cd-plus-plus-jp.html"
@@ -318,176 +373,231 @@
 </iframe>
 
 
-<!-- COMMAND BAR -->
-<div id="commandBar">
+<!-- =========================
+     COMMAND PANEL
+========================= -->
 
-    <div id="dragHandle" title="Drag command bar">
-        ⋮⋮
-    </div>
+<div id="commandPanel">
 
-    <input
-        id="commandInput"
-        type="text"
-        autocomplete="off"
-        spellcheck="false"
-        placeholder="Enter command..."
-    >
-
-    <button id="commandButton">
-        Run
+    <button
+        id="commandToggle"
+        title="Show or hide commands">
+        ←
     </button>
+
+    <div id="commandBar">
+
+        <input
+            id="commandInput"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="Enter command..."
+        >
+
+        <button id="commandButton">
+            Run
+        </button>
+
+    </div>
 
 </div>
 
 
-<!-- SHOBOKLO MENU -->
+<!-- =========================
+     SHOBOKLO MENU
+========================= -->
+
 <div id="menu">
 
     <div id="menuHeader">
-        <span id="menuTitle">Shoboklo's Menu</span>
-        <button id="closeMenu">×</button>
+
+        <span id="menuTitle">
+            Shoboklo's Menu
+        </span>
+
+        <button id="closeMenu">
+            ×
+        </button>
+
     </div>
+
 
     <div id="menuContent">
 
         <div class="cheat">
             <span>Debug Mode</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Invincibility</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Super Sonic</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Infinite Rings</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Infinite Lives</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Infinite Time</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Speed Boost</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Moon Jump</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Super Jump</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Freeze Timer</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>No Enemy Damage</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Fast Spin Dash</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Low Gravity</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Slow Motion</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>High Speed Mode</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Extra Rings</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
 
         <div class="cheat">
             <span>Auto Spin</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
 
+
         <div class="cheat">
             <span>Chaos Mode</span>
+
             <label class="switch">
                 <input type="checkbox">
                 <span class="slider"></span>
@@ -495,10 +605,14 @@
         </div>
 
     </div>
+
 </div>
 
 
-<!-- REOPEN BUTTON -->
+<!-- =========================
+     REOPEN BUTTON
+========================= -->
+
 <button id="reopenButton">
     Shoboklo's Menu
 </button>
@@ -507,36 +621,88 @@
 <script>
 
 /* =========================
-   COMMAND SYSTEM
+   COMMANDS
 ========================= */
 
-const commandInput = document.getElementById("commandInput");
-const commandButton = document.getElementById("commandButton");
+const commandInput =
+    document.getElementById("commandInput");
 
-const menu = document.getElementById("menu");
-const closeMenu = document.getElementById("closeMenu");
-const reopenButton = document.getElementById("reopenButton");
+const commandButton =
+    document.getElementById("commandButton");
+
+const menu =
+    document.getElementById("menu");
+
+const closeMenu =
+    document.getElementById("closeMenu");
+
+const reopenButton =
+    document.getElementById("reopenButton");
+
+const commandPanel =
+    document.getElementById("commandPanel");
+
+const commandToggle =
+    document.getElementById("commandToggle");
+
 
 let menuUnlocked = false;
+let panelOpen = true;
 
+
+/* =========================
+   SLIDE COMMAND PANEL
+========================= */
+
+commandToggle.addEventListener("click", function () {
+
+    panelOpen = !panelOpen;
+
+    if (panelOpen) {
+
+        commandPanel.classList.remove("hidden");
+
+        commandToggle.textContent = "←";
+
+    } else {
+
+        commandPanel.classList.add("hidden");
+
+        commandToggle.textContent = "→";
+
+    }
+
+});
+
+
+/* =========================
+   RUN COMMAND
+========================= */
 
 function runCommand() {
 
-    const command = commandInput.value.trim().toLowerCase();
+    const command =
+        commandInput.value.trim().toLowerCase();
 
-    if (!command) return;
+
+    if (!command) {
+        return;
+    }
+
 
     if (command === "/shoboklo") {
 
         menuUnlocked = true;
 
         menu.style.display = "block";
+
         reopenButton.style.display = "none";
 
         commandInput.value = "";
 
         return;
     }
+
 
     if (command === "/help") {
 
@@ -545,6 +711,7 @@ function runCommand() {
         return;
     }
 
+
     if (command === "/clear") {
 
         commandInput.value = "";
@@ -552,170 +719,187 @@ function runCommand() {
         return;
     }
 
+
     commandInput.value = "";
 }
 
 
-commandButton.addEventListener("click", runCommand);
+commandButton.addEventListener(
+    "click",
+    runCommand
+);
 
-commandInput.addEventListener("keydown", function(event) {
 
-    if (event.key === "Enter") {
-        runCommand();
+commandInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+            runCommand();
+        }
+
     }
-
-});
+);
 
 
 /* =========================
-   MENU CLOSE / REOPEN
+   CLOSE MENU
 ========================= */
 
-closeMenu.addEventListener("click", function() {
+closeMenu.addEventListener(
+    "click",
+    function() {
 
-    menu.style.display = "none";
+        menu.style.display = "none";
 
-    if (menuUnlocked) {
-        reopenButton.style.display = "block";
+        if (menuUnlocked) {
+
+            reopenButton.style.display = "block";
+
+        }
+
     }
-
-});
-
-
-reopenButton.addEventListener("click", function() {
-
-    menu.style.display = "block";
-    reopenButton.style.display = "none";
-
-});
+);
 
 
 /* =========================
-   DRAG COMMAND BAR
+   REOPEN MENU
 ========================= */
 
-const commandBar = document.getElementById("commandBar");
-const dragHandle = document.getElementById("dragHandle");
+reopenButton.addEventListener(
+    "click",
+    function() {
 
-let draggingCommand = false;
-let commandOffsetX = 0;
-let commandOffsetY = 0;
+        menu.style.display = "block";
 
+        reopenButton.style.display = "none";
 
-dragHandle.addEventListener("pointerdown", function(event) {
-
-    draggingCommand = true;
-
-    const rect = commandBar.getBoundingClientRect();
-
-    commandOffsetX = event.clientX - rect.left;
-    commandOffsetY = event.clientY - rect.top;
-
-    dragHandle.setPointerCapture(event.pointerId);
-
-});
-
-
-dragHandle.addEventListener("pointermove", function(event) {
-
-    if (!draggingCommand) return;
-
-    let x = event.clientX - commandOffsetX;
-    let y = event.clientY - commandOffsetY;
-
-    const maxX = window.innerWidth - commandBar.offsetWidth;
-    const maxY = window.innerHeight - commandBar.offsetHeight;
-
-    x = Math.max(0, Math.min(x, maxX));
-    y = Math.max(0, Math.min(y, maxY));
-
-    commandBar.style.left = x + "px";
-    commandBar.style.top = y + "px";
-
-});
-
-
-dragHandle.addEventListener("pointerup", function() {
-
-    draggingCommand = false;
-
-});
+    }
+);
 
 
 /* =========================
    DRAG SHOBOKLO MENU
 ========================= */
 
-const menuHeader = document.getElementById("menuHeader");
+const menuHeader =
+    document.getElementById("menuHeader");
 
-let draggingMenu = false;
-let menuOffsetX = 0;
-let menuOffsetY = 0;
+let dragging = false;
 
-
-menuHeader.addEventListener("pointerdown", function(event) {
-
-    if (event.target === closeMenu) return;
-
-    draggingMenu = true;
-
-    const rect = menu.getBoundingClientRect();
-
-    menuOffsetX = event.clientX - rect.left;
-    menuOffsetY = event.clientY - rect.top;
-
-    menuHeader.setPointerCapture(event.pointerId);
-
-});
+let offsetX = 0;
+let offsetY = 0;
 
 
-menuHeader.addEventListener("pointermove", function(event) {
+menuHeader.addEventListener(
+    "pointerdown",
+    function(event) {
 
-    if (!draggingMenu) return;
+        if (event.target === closeMenu) {
+            return;
+        }
 
-    let x = event.clientX - menuOffsetX;
-    let y = event.clientY - menuOffsetY;
+        dragging = true;
 
-    const maxX = window.innerWidth - menu.offsetWidth;
-    const maxY = window.innerHeight - menu.offsetHeight;
+        const rect =
+            menu.getBoundingClientRect();
 
-    x = Math.max(0, Math.min(x, maxX));
-    y = Math.max(0, Math.min(y, maxY));
+        offsetX =
+            event.clientX - rect.left;
 
-    menu.style.left = x + "px";
-    menu.style.top = y + "px";
-    menu.style.right = "auto";
+        offsetY =
+            event.clientY - rect.top;
 
-});
+        menuHeader.setPointerCapture(
+            event.pointerId
+        );
+
+    }
+);
 
 
-menuHeader.addEventListener("pointerup", function() {
+menuHeader.addEventListener(
+    "pointermove",
+    function(event) {
 
-    draggingMenu = false;
+        if (!dragging) {
+            return;
+        }
 
-});
+        let x =
+            event.clientX - offsetX;
+
+        let y =
+            event.clientY - offsetY;
+
+
+        const maxX =
+            window.innerWidth - menu.offsetWidth;
+
+        const maxY =
+            window.innerHeight - menu.offsetHeight;
+
+
+        x = Math.max(
+            0,
+            Math.min(x, maxX)
+        );
+
+        y = Math.max(
+            0,
+            Math.min(y, maxY)
+        );
+
+
+        menu.style.left = x + "px";
+        menu.style.top = y + "px";
+        menu.style.right = "auto";
+
+    }
+);
+
+
+menuHeader.addEventListener(
+    "pointerup",
+    function() {
+
+        dragging = false;
+
+    }
+);
 
 
 /* =========================
    CHEAT SWITCHES
 ========================= */
 
-document.querySelectorAll(".cheat input").forEach(function(toggle) {
+document
+    .querySelectorAll(".cheat input")
+    .forEach(function(toggle) {
 
-    toggle.addEventListener("change", function() {
+        toggle.addEventListener(
+            "change",
+            function() {
 
-        const name =
-            this.closest(".cheat")
-            .querySelector("span")
-            .textContent;
+                const name =
+                    this
+                    .closest(".cheat")
+                    .querySelector("span")
+                    .textContent;
 
-        console.log(
-            name + ": " + (this.checked ? "ON" : "OFF")
+
+                console.log(
+                    name +
+                    ": " +
+                    (this.checked
+                        ? "ON"
+                        : "OFF")
+                );
+
+            }
         );
 
     });
-
-});
 
 </script>
 
